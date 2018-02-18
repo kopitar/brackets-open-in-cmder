@@ -5,13 +5,24 @@
 define(function (require, exports, module) {
 	"use strict";
 
-	var NodeDomain     = brackets.getModule("utils/NodeDomain"),
-			ExtensionUtils = brackets.getModule("utils/ExtensionUtils"),
-			CommandManager = brackets.getModule("command/CommandManager"),
-			Menus          = brackets.getModule("command/Menus"),
-			ProjectManager = brackets.getModule("project/ProjectManager"),
-			COMMAND_ID     = "openincmder.open";
-
+	var NodeDomain        = brackets.getModule("utils/NodeDomain"),
+        ExtensionUtils    = brackets.getModule("utils/ExtensionUtils"),
+        CommandManager    = brackets.getModule("command/CommandManager"),
+        KeyBindingManager = brackets.getModule("command/KeyBindingManager"),
+        Menus             = brackets.getModule("command/Menus"),
+        ProjectManager    = brackets.getModule("project/ProjectManager"),
+        COMMAND_ID        = "openincmder.open",
+        KEY_BINDINGS      = [
+            { key: 'Ctrl-Alt-I',
+                platform: 'win'
+            }, {
+                key: 'Cmd-Shift-I',
+                platform: 'mac'
+            }, {
+                key: 'Ctrl-Alt-I'
+                }
+            ];
+        
 	var openInCmderDomain = new NodeDomain("openInCmder", ExtensionUtils.getModulePath(module, "node/OpenInCmderDomain"));
 
 	var openInCmder = function() {
@@ -38,6 +49,7 @@ define(function (require, exports, module) {
 	menu1.addMenuItem(COMMAND_ID /*, [{ "key": "Ctrl-Alt-I" }, { "key": "Ctrl-Alt-I", "platform": "mac" }]*/);
 	var menu2 = Menus.getContextMenu(Menus.ContextMenuIds.WORKING_SET_MENU);
 	menu2.addMenuItem(COMMAND_ID);
+    KeyBindingManager.addBinding(COMMAND_ID, KEY_BINDINGS);
 	/*var menu3 = Menus.getMenu(Menus.AppMenuBar.FILE_MENU);
 	menu3.addMenuItem(COMMAND_ID);*/
 });
